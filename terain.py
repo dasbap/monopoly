@@ -1,5 +1,6 @@
 from propriete import Propriete
 
 class terain(Propriete):
-    def __init__(self, prix_achats : int, nom : str, valeur_hypoteque : int):
-        pass
+    def __init__(self, nom, couleur, prix_acquisition) :
+        super().__init__(nom, couleur, prix_acquisition)
+        
