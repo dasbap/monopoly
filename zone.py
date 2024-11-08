@@ -10,7 +10,7 @@ class Zone:
 
     def ajouter_propriete(self, propriete: Propriete):
         """Ajoute une propriété à la zone et définit sa zone."""
-        if propriete.zone is None:
+        if propriete.zone is self:
             self.proprietes.append(propriete)
             propriete.zone = self
             print(f"{propriete.nom} a été ajouté à la zone {self.nom}.")
@@ -29,3 +29,5 @@ class Zone:
         """Affiche les informations de la zone."""
         proprietes_nom = ', '.join([propriete.nom for propriete in self.proprietes])
         return f"Zone: {self.nom}, Propriétés: {proprietes_nom}, Prix Maison: {self.prix_maison} €"
+
+zone_gare = Zone("la zone des gare", "noir")

@@ -11,7 +11,7 @@ class Terrain(Propriete):
     def calculer_loyer(self) -> int:
         if not isinstance(self.zone,Zone): return -1
         if self.zone.est_monopole(self.proprietaire) and self.nb_maisons == 0:
-            return self.loyer[1] * 2 #return le double du loyer de base si on a le monopole et pas de maison
+            return self.loyer[1] * 2
             
 
     def ajouter_maison(self, joueur : Joueur):

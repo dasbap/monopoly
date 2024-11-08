@@ -7,6 +7,9 @@ class Zone(ABC):
         self.couleur = couleur
         self.prix_maison : int = prix_maison
         self.proprietes: list[Propriete] = [] 
+        
+    def ajouter_propriete(self, propriete: 'Propriete'):
+        pass
 
 class Propriete(ABC):
     def __init__(self, prix_achats: int, nom: str, loyer : list[int], zone : Zone):
@@ -17,6 +20,7 @@ class Propriete(ABC):
         self.zone = zone
         self.__proprietaire : Joueur = banque
         self.loyer = loyer
+        self.zone.ajouter_propriete(self)
 
     def __str__(self) -> str:
         return f"{self.nom} - Prix d'achat: {self.prix_achats} € - Propriétaire: {self.proprietaire.nom if self.proprietaire else 'aucun'}"
