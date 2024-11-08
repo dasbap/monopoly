@@ -1,10 +1,11 @@
 from propriete import Propriete
+from joueur import Joueur
 
 class Zone:
     def __init__(self, nom: str, couleur : str = "", prix_maison: int = 0):
         self.nom = nom
         self.couleur = couleur
-        self.prix_maison = prix_maison
+        self.prix_maison : int = prix_maison
         self.proprietes: list[Propriete] = []  
 
     def ajouter_propriete(self, propriete: Propriete):
@@ -16,7 +17,7 @@ class Zone:
         else:
             print(f"{propriete.nom} appartient déjà à la zone {propriete.zone.nom}.")
 
-    def nb_proprietes_possedees(self, joueur) -> int:
+    def nb_proprietes_possedees(self, joueur : Joueur) -> int:
         """Renvoie le nombre de propriétés possédées par un joueur dans cette zone."""
         return sum(1 for propriete in self.proprietes if propriete.proprietaire == joueur)
 

@@ -4,17 +4,19 @@ from joueur import Joueur
 
 class Terrain(Propriete):
     def __init__(self, nom, zone : Zone, prix_acquisition, loyer : list[int, int, int, int, int, int]):
-        super().__init__(prix_acquisition, nom)
-        self.zone = zone
+        super().__init__(prix_acquisition,loyer, nom, zone)
         self.nb_maisons = 0
         self.prix_maisons = self.zone.prix_maison
-        self.loyer = loyer
     
     def calculer_loyer(self) -> int:
-        pass
+        if not isinstance(self.zone,Zone): return -1
+        if self.zone.est_monopole(self.proprietaire) and self.nb_maisons == 0:
+            return self.loyer[1] * 2 #return le double du loyer de base si on a le monopole et pas de maison
+            
 
     def ajouter_maison(self, joueur : Joueur):
-        if self.zone.est_monopoll(joueur):
+        if not isinstance(self.zone,Zone): return None
+        if self.zone.est_monopole(joueur):
             if joueur.argent >= self.prix_maisons:
                 if self.nb_maisons < 4 :
                     self.nb_maisons += 1

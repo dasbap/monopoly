@@ -1,13 +1,22 @@
-from joueur import Joueur 
+from joueur import Joueur, banque
+from abc import ABC, abstractmethod
 
-class Propriete:
-    def __init__(self, prix_achats: int, nom: str):
+class Zone(ABC):
+    def __init__(self, nom: str, couleur : str = "", prix_maison: int = 0):
+        self.nom = nom
+        self.couleur = couleur
+        self.prix_maison : int = prix_maison
+        self.proprietes: list[Propriete] = [] 
+
+class Propriete(ABC):
+    def __init__(self, prix_achats: int, nom: str, loyer : list[int], zone : Zone):
         self.__prix_achats = prix_achats
         self.__nom = nom
         self.__valeur_hypoteque = prix_achats / 2
         self.__est_hypoteque = False
-        self.__zone = None
-        self.__proprietaire = None  
+        self.zone = zone
+        self.__proprietaire : Joueur = banque
+        self.loyer = loyer
 
     def __str__(self) -> str:
         return f"{self.nom} - Prix d'achat: {self.prix_achats} € - Propriétaire: {self.proprietaire.nom if self.proprietaire else 'aucun'}"
@@ -33,13 +42,17 @@ class Propriete:
         self.__prix_achats = value
 
     @property
-    def zone(self):
+    def zone(self) -> Zone:
         return self.__zone
 
     @zone.setter
     def zone(self, value) -> None:
         self.__zone = value
-        
+    
+    @zone.getter
+    def zone(self) -> Zone:
+        return self.__zone
+    
     @property
     def proprietaire(self):
         return self.__proprietaire
@@ -92,16 +105,9 @@ class Propriete:
         else:
             print(f"{self.nom} n'est pas hypothéquée.")
 
+    @abstractmethod
     def calculer_loyer(self) -> int:
-        """Calcule le loyer basé sur le nombre de propriétés possédées dans la zone."""
-        if self.est_hypoteque:
-            return 0
-        loyer_de_base = 50
-        if self.zone:
-            loyer = loyer_de_base * (1 + self.zone.nb_proprietes_possedees(self.proprietaire))
-            print(f"Loyer pour {self.nom} : {loyer} € ")
-            return loyer
-        return loyer_de_base
+        pass
 
     def est_proprietaire(self, joueur) -> bool:
         """Vérifie si un joueur est le propriétaire de la propriété."""
@@ -109,11 +115,14 @@ class Propriete:
 
 
 if __name__ == '__main__':
-    p = Propriete(400, "rue de la paix")
-    print(p) 
     try:
-        print(p.__nom) 
-    except AttributeError:
-        print("__nom n'est pas accessible directement")
+        p = Propriete(400, "rue de la paix")
+        print(p) 
+        try:
+            print(p.__nom) 
+        except AttributeError:
+            print("__nom n'est pas accessible directement")
 
-    print(p.nom)  
+        print(p.nom)  
+    except:
+        print("Erreur lors de l'instanciation de la class Propriete")
