@@ -1,5 +1,5 @@
 from propriete import Propriete
-from zone import Zone
+from zone import Zone, zone_residanciel
 from joueur import Joueur
 
 class Terrain(Propriete):
@@ -32,7 +32,9 @@ class Terrain(Propriete):
             print(f"Vous ne possédez pas toutes les propriétés de la zone {self.zone.couleur}.")
         
     def ajouter_hotel(self, joueur : Joueur):
-        if self.zone.est_monopoll(joueur):
+        if not isinstance(self.zone, Zone): return
+        
+        if self.zone.est_monopole(joueur):
             if joueur.argent >= self.prix_maisons:
                 if self.nb_maisons == 4 :
                     self.nb_maisons += 1
@@ -44,3 +46,11 @@ class Terrain(Propriete):
                 print(f"Vous n'avez pas assez d'argent pour construire une maison sur {self.nom}.")
         else :
             print(f"Vous ne possédez pas toutes les propriétés de la zone {self.zone.couleur}.")
+
+def init_terrain():
+    t = {
+        Terrain("Mediterranean", zone_residanciel["maron"], 60, [2,10,30,90,160,250]),
+        Terrain("Baltic", zone_residanciel["maron"], 60, [4,20,60,180,320,450]),
+        Terrain("Oriental", zone_residanciel["bleu clair"], 100, [8,40,100,300,450,600]),
+        Terrain("Oriental", zone_residanciel["bleu clair"], 100, [8,40,100,300,450,600]),
+    }

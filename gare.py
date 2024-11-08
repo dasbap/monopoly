@@ -6,18 +6,21 @@ class Gare(Propriete):
     prix_achats = 200
     def __init__(self, nom : str):
         super().__init__(Gare.prix_achats, nom, Gare.Loyer, zone_gare)
-    def __str__(self):
-        return f"Gare: {self.nom}"
+    
     def __repr__(self):
         return self.__str__()
 
-    
     def calculer_loyer(self) -> int:
         if not isinstance(self.zone, Zone): return -1
         return self.loyer[self.zone.nb_proprietes_possedees(self.proprietaire)]
 
-gare1 = Gare("Cenon")
+gare1 = Gare("Montparnasse")
+gare2 = Gare("Lyon")
+gare3 = Gare("Saint-Lazare")
+gare4 = Gare("du Nord")
 
-print(gare1.calculer_loyer())
-print(gare1.proprietaire)
-print(gare1.zone.proprietes)
+if __name__ == "__main__":
+    for gare in [gare1, gare2, gare3,gare4 ]:
+        print(gare.calculer_loyer())
+        print(gare.proprietaire)
+

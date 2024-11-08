@@ -2,8 +2,7 @@ from propriete import Propriete
 from joueur import Joueur
 
 class Zone:
-    def __init__(self, nom: str, couleur : str = "", prix_maison: int = 0):
-        self.nom = nom
+    def __init__(self, couleur : str = "", prix_maison: int = 0):
         self.couleur = couleur
         self.prix_maison : int = prix_maison
         self.proprietes: list[Propriete] = []  
@@ -13,7 +12,7 @@ class Zone:
         if propriete.zone is self:
             self.proprietes.append(propriete)
             propriete.zone = self
-            print(f"{propriete.nom} a été ajouté à la zone {self.nom}.")
+            print(f"{propriete.nom} a été ajouté à la zone {self.__class__.__name__}.")
         else:
             print(f"{propriete.nom} appartient déjà à la zone {propriete.zone.nom}.")
 
@@ -28,6 +27,18 @@ class Zone:
     def __str__(self):
         """Affiche les informations de la zone."""
         proprietes_nom = ', '.join([propriete.nom for propriete in self.proprietes])
-        return f"Zone: {self.nom}, Propriétés: {proprietes_nom}, Prix Maison: {self.prix_maison} €"
+        return f"Zone: {self.__class__.__name__}, Propriétés: {proprietes_nom}, Prix Maison: {self.prix_maison} €"
 
-zone_gare = Zone("la zone des gare", "noir")
+zone_gare = Zone("noir")
+zone_companie = Zone("blanc")
+
+zone_residanciel = {
+    "bleu foncé" : Zone("bleu foncé"),
+    "bleu clair" : Zone("bleu clair"),
+    "rouge" : Zone("rouge"),
+    "jaune" : Zone("jaune"),
+    "vert" : Zone("vert"),
+    "orange" : Zone("orange"),
+    "rose" : Zone("rose"),
+    "maron" : Zone("maron")
+}
