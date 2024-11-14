@@ -1,5 +1,6 @@
 from propriete import Propriete
 from joueur import Joueur
+import mysql.connector
 
 class Zone:
     def __init__(self, couleur : str = "", prix_maison: int = 0):
@@ -15,19 +16,48 @@ class Zone:
             print(f"{propriete.nom} a été ajouté à la zone {self.__class__.__name__}.")
         else:
             print(f"{propriete.nom} appartient déjà à la zone {propriete.zone.nom}.")
-
+    
     def nb_proprietes_possedees(self, joueur : Joueur) -> int:
         """Renvoie le nombre de propriétés possédées par un joueur dans cette zone."""
         return sum(1 for propriete in self.proprietes if propriete.proprietaire == joueur)
-
+    
     def est_monopole(self, joueur) -> bool:
         """Vérifie si le joueur possède toutes les propriétés de la zone."""
         return all(propriete.proprietaire == joueur for propriete in self.proprietes)
-
+    
     def __str__(self):
         """Affiche les informations de la zone."""
         proprietes_nom = ', '.join([propriete.nom for propriete in self.proprietes])
         return f"Zone: {self.__class__.__name__}, Propriétés: {proprietes_nom}, Prix Maison: {self.prix_maison} €"
+    
+    @classmethod
+    def connexion_bdd(cls):
+        mydb = mysql.connector.connect(
+            host="localhost",
+            user="root",
+            password="",
+            database = "monopoly"
+        )
+        return mydb
+    
+    @classmethod
+    def creation_table(cls):
+        mydb = Zone.connexion_bdd()
+        monCurseur = mydb.cursor()
+        monCurseur.execute("""CREATE TABLE IF NOT EXISTS Quartiers (
+                        id INT NOT NULL UNIQUE AUTO_INCREMENT,
+                        couleur VARCHAR(255),
+                        prix_maison INT NOT NULL,
+                        PRIMARY KEY(id)
+                        )
+                        """)
+    
+    @classmethod
+    def suppression_table(cls):
+        mydb = Zone.connexion_bdd()
+        monCurseur = mydb.cursor()
+        monCurseur.execute("DROP TABLE IF EXISTS Quartiers")
+
 
 zone_gare = Zone("noir")
 zone_companie = Zone("blanc")
@@ -42,3 +72,5 @@ zone_residanciel = {
     "rose" : Zone("rose"),
     "maron" : Zone("maron")
 }
+
+Zone.creation_table()

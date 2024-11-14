@@ -52,5 +52,6 @@ def init_terrain():
         Terrain("Mediterranean", zone_residanciel["maron"], 60, [2,10,30,90,160,250]),
         Terrain("Baltic", zone_residanciel["maron"], 60, [4,20,60,180,320,450]),
         Terrain("Oriental", zone_residanciel["bleu clair"], 100, [8,40,100,300,450,600]),
-        Terrain("Oriental", zone_residanciel["bleu clair"], 100, [8,40,100,300,450,600]),
+        Terrain("Vermont", zone_residanciel["bleu clair"], 100, [8,40,100,300,450,600]),
     }
+    return t
