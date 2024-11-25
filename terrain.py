@@ -112,17 +112,12 @@ class Terrain(Propriete):
 def init_terrain():
     """Initialise les terrains avec des zones prédéfinies."""
     terrains = {
-        Terrain("Mediterranean", zone_residanciel["maron"], 60, [2, 10, 30, 90, 160, 250]),
-        Terrain("Baltic", zone_residanciel["maron"], 60, [4, 20, 60, 180, 320, 450]),
-        Terrain("Oriental", zone_residanciel["bleu clair"], 100, [6, 30, 90, 270, 400, 550]),
-        Terrain("Vermont", zone_residanciel["bleu clair"], 100, [6, 30, 90, 270, 400, 550]),
-        Terrain("Connecticut", zone_residanciel["bleu clair"], 120, [8,40,100,300,450,600]),
-        Terrain("St. Charles", zone_residanciel["violet"], 140, [10,50,150,450,625]),
-        Terrain("States", zone_residanciel["violet"],140, [10,50,150,450,625,750]),
-        Terrain("Virginia", zone_residanciel["violet"], 160, [12,60,180,500,700,900]),
-        Terrain("St. James", zone_residanciel["orange"], 180, [14,70,200,550,750,950]),
-        Terrain("Tennessee", zone_residanciel["orange"],180, [14,70,200,550,750,950]),
-        Terrain("New York", zone_residanciel["orange"], 200, [16,80,220,600,800,100])
+        Terrain("Boulvard de belleville", zone_residanciel["maron"], 60, [2, 10, 30, 90, 160, 250]),
+        Terrain("Rue lecourbe", zone_residanciel["maron"], 60, [4, 20, 60, 180, 320, 450]),
+        Terrain("Rue de vaugiard", zone_residanciel["bleu clair"], 100, [6, 30, 90, 270, 400, 550]),
+        Terrain("Rue de courcelles", zone_residanciel["bleu clair"], 100, [6, 30, 90, 270, 400, 550]),
+        Terrain("Avenue de la republique", zone_residanciel["bleu clair"], 120, [8,40,100,300,450,600]),
+        Terrain("Boulvard de la villet", zone_residanciel["violet"], 140, [10,50,150,450,625,750]),
     }
     return terrains
 terrain = init_terrain()
