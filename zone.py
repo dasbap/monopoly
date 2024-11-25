@@ -22,7 +22,7 @@ class Zone:
         if propriete.zone is self:
             self.proprietes.append(propriete)
             propriete.zone = self
-            print(f"{propriete.nom} a été ajouté à la zone {self.__class__.__name__}.")
+            print(f"{propriete.nom} a été ajouté à la zone {self.couleur}.")
         else:
             print(f"{propriete.nom} appartient déjà à la zone {propriete.zone.nom}.")
     
@@ -36,13 +36,18 @@ class Zone:
     
     @classmethod
     def connexion_bdd(cls):
-        mydb = mysql.connector.connect(
-            host="localhost",
-            user="root",
-            password="",
-            database="monopoly"
-        )
-        return mydb
+        try:
+            mydb = mysql.connector.connect(
+                host="localhost",
+                user="root",
+                password="",
+                database="monopoly"
+            )
+            return mydb
+        except mysql.connector.Error as e:
+            print(f"Erreur de connexion à la base de données: {e}")
+            return None
+
     
     def sauvegarde_bdd(self):
         mydb = Zone.connexion_bdd()
