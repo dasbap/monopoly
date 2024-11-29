@@ -118,6 +118,10 @@ def init_terrain():
         Terrain("Rue de courcelles", zone_residanciel["bleu clair"], 100, [6, 30, 90, 270, 400, 550]),
         Terrain("Avenue de la republique", zone_residanciel["bleu clair"], 120, [8,40,100,300,450,600]),
         Terrain("Boulvard de la villet", zone_residanciel["violet"], 140, [10,50,150,450,625,750]),
+        Terrain("Avenue de Neuilly", zone_residanciel["violet"], 140, [10,50,150,450,625,750]),
+        Terrain("Rue de Paradis", zone_residanciel["violet"], 160,[12,60,180,500,700,900]),
+        Terrain("Avenue Mozart", zone_residanciel["orange"],180, [14,70,200,550,750,950]),
+        Terrain("Boulevard Saint-Michel", zone_residanciel["orange"], 180,[14,70,200,550,750,950]),
     }
     return terrains
 terrain = init_terrain()
