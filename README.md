@@ -1,0 +1,1 @@
+Le code du test se trouve sur test.py la connexion à la base se fait manuelment

@@ -20,7 +20,7 @@ def initialiser_joueurs():
         print("Nombre de joueurs incorrect, choisissez entre 1 et 4 ")
         initialiser_joueurs()
     else:
-        
+        pass
         
 
 

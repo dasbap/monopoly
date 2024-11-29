@@ -63,7 +63,7 @@ class Terrain(Propriete):
         )
         return mydb
 
-    def sauvegarde_bdd(self):
+    def sauvegarde_bdd(self, print_t= False):
         """Sauvegarde le terrain dans la base de données si il n'existe pas déjà."""
         mydb = Terrain.connexion_bdd()
         monCurseur = mydb.cursor()
@@ -72,7 +72,7 @@ class Terrain(Propriete):
         terrain_existant = monCurseur.fetchone()
 
         if terrain_existant:
-            print(f"Le terrain {self.nom} existe déjà dans la base de données avec l'ID {terrain_existant[0]}.")
+            if print_t: print(f"Le terrain {self.nom} existe déjà dans la base de données avec l'ID {terrain_existant[0]}.")
             self.id_bdd = terrain_existant[0]
         else:
             if hasattr(self, 'id_bdd') and self.id_bdd:
@@ -80,14 +80,14 @@ class Terrain(Propriete):
                     UPDATE Terrain SET nom = %s, prix_acquisition = %s, zone_id = %s, nb_maisons = %s WHERE id = %s
                 """, (self.nom, self.prix_achats, self.zone.id_bdd, self.nb_maisons, self.id_bdd))
                 mydb.commit()
-                print(f"Le terrain {self.nom} a été mis à jour dans la base de données.")
+                if print_t: print(f"Le terrain {self.nom} a été mis à jour dans la base de données.")
             else:
                 monCurseur.execute("""
                     INSERT INTO Terrain (nom, prix_acquisition, zone_id, nb_maisons) VALUES (%s, %s, %s, %s)
                 """, (self.nom, self.prix_achats, self.zone.id_bdd, self.nb_maisons))
                 mydb.commit()
                 self.id_bdd = monCurseur.lastrowid
-                print(f"Le terrain {self.nom} a été sauvegardé dans la base de données avec l'ID {self.id_bdd}.")
+                if print_t: print(f"Le terrain {self.nom} a été sauvegardé dans la base de données avec l'ID {self.id_bdd}.")
 
 
     @classmethod
@@ -111,7 +111,7 @@ class Terrain(Propriete):
 
 def init_terrain():
     """Initialise les terrains avec des zones prédéfinies."""
-    terrains = {
+    terrains = [
         Terrain("Boulvard de belleville", zone_residanciel["maron"], 60, [2, 10, 30, 90, 160, 250]),
         Terrain("Rue lecourbe", zone_residanciel["maron"], 60, [4, 20, 60, 180, 320, 450]),
         Terrain("Rue de vaugiard", zone_residanciel["bleu clair"], 100, [6, 30, 90, 270, 400, 550]),
@@ -122,6 +122,6 @@ def init_terrain():
         Terrain("Rue de Paradis", zone_residanciel["violet"], 160,[12,60,180,500,700,900]),
         Terrain("Avenue Mozart", zone_residanciel["orange"],180, [14,70,200,550,750,950]),
         Terrain("Boulevard Saint-Michel", zone_residanciel["orange"], 180,[14,70,200,550,750,950]),
-    }
+    ]
     return terrains
 terrain = init_terrain()

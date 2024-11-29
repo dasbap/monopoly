@@ -17,14 +17,14 @@ class Zone:
     def __repr__(self):
         return self.__str__()
 
-    def ajouter_propriete(self, propriete: Propriete):
+    def ajouter_propriete(self, propriete: Propriete, print_t= False):
         """Ajoute une propriété à la zone et définit sa zone."""
         if propriete.zone is self:
             self.proprietes.append(propriete)
             propriete.zone = self
-            print(f"{propriete.nom} a été ajouté à la zone {self.couleur}.")
+            if print_t: print(f"{propriete.nom} a été ajouté à la zone {self.couleur}.")
         else:
-            print(f"{propriete.nom} appartient déjà à la zone {propriete.zone.nom}.")
+            if print_t: print(f"{propriete.nom} appartient déjà à la zone {propriete.zone.nom}.")
     
     def nb_proprietes_possedees(self, joueur: Joueur) -> int:
         """Renvoie le nombre de propriétés possédées par un joueur dans cette zone."""
@@ -49,14 +49,14 @@ class Zone:
             return None
 
     
-    def sauvegarde_bdd(self):
+    def sauvegarde_bdd(self, print_t = False):
         mydb = Zone.connexion_bdd()
         monCurseur = mydb.cursor()
         monCurseur.execute("SELECT id FROM Zone WHERE couleur = %s", (self.couleur,))
         result = monCurseur.fetchone()
         if result:
             self.id_bdd = result[0]
-            print(f"La zone {self.couleur} existe déjà avec l'ID {self.id_bdd}.")
+            if print_t: print(f"La zone {self.couleur} existe déjà avec l'ID {self.id_bdd}.")
         else:
             monCurseur.execute(
                 "INSERT INTO Zone (couleur, prix_maison) VALUES (%s, %s)",
@@ -64,10 +64,10 @@ class Zone:
             )
             mydb.commit()
             self.id_bdd = monCurseur.lastrowid 
-            print(f"Zone sauvegardée dans la base de données avec l'ID {self.id_bdd}.")
+            if print_t: print(f"Zone sauvegardée dans la base de données avec l'ID {self.id_bdd}.")
     
     @classmethod
-    def importer_un(cls, id):
+    def importer_un(cls, id, print_t= False):
         mydb = Zone.connexion_bdd()
         mycursor = mydb.cursor(dictionary=True)
         z = None
@@ -81,11 +81,11 @@ class Zone:
                 z = Zone(result["couleur"], result["prix_maison"])
                 z.id_bdd = result["id"] 
         except Exception as e:
-            print(f"Erreur lors de l'importation de la zone: {e}")
+            if print_t: print(f"Erreur lors de l'importation de la zone: {e}")
         return z 
     
     @classmethod
-    def importer_tous(cls):
+    def importer_tous(cls, print_t = False):
         mydb = Zone.connexion_bdd()
         mycursor = mydb.cursor(dictionary=True)
         zones = []
@@ -99,7 +99,7 @@ class Zone:
                 z.id_bdd = result["id"]  
                 zones.append(z)  
         except Exception as e:
-            print(f"Erreur lors de l'importation des zones: {e}")
+            if print_t: print(f"Erreur lors de l'importation des zones: {e}")
         return zones  
     
     @classmethod
@@ -136,18 +136,18 @@ zone_residanciel = {
 }
 
 Zone.creation_table()
+if __name__ == "__main__":
+    for zone in zone_residanciel:
+        zone_residanciel[zone].sauvegarde_bdd()
 
-for zone in zone_residanciel:
-    zone_residanciel[zone].sauvegarde_bdd()
+    zone_residanciel["bleu foncé"].sauvegarde_bdd()
+    zone_residanciel["violet"].sauvegarde_bdd() 
 
-zone_residanciel["bleu foncé"].sauvegarde_bdd()
-zone_residanciel["violet"].sauvegarde_bdd() 
+    zone_gare.sauvegarde_bdd()
+    zone_companie.sauvegarde_bdd()
 
-zone_gare.sauvegarde_bdd()
-zone_companie.sauvegarde_bdd()
+    zone_alea = Zone.importer_un(8)
 
-zone_alea = Zone.importer_un(8)
+    print(f"Zone importée : {zone_alea}" if zone_alea else "Aucune zone importée.")
 
-print(f"Zone importée : {zone_alea}" if zone_alea else "Aucune zone importée.")
-
-print(f"Toutes les Zones importable : {Zone.importer_tous()}")
+    print(f"Toutes les Zones importable : {Zone.importer_tous()}")
