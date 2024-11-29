@@ -14,11 +14,14 @@ def initialiser_plateau():
 
 
 def initialiser_joueurs():
-    joueurs = [
-        {"nom": "Joueur 1", "argent": 1500, "position": 0},
-        {"nom": "Joueur 2", "argent": 1500, "position": 0},
-        ]
-    return joueurs
+    joueurs = []
+    nb_joueur = input("Combien y'a t-il de joueur")
+    if nb_joueur > 4 : 
+        print("Nombre de joueurs incorrect, choisissez entre 1 et 4 ")
+        initialiser_joueurs()
+    else:
+        
+        
 
 
 def lancer_des():
