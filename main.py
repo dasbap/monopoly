@@ -22,7 +22,7 @@ def initialiser_joueurs():
     else:       
         for _ in range(nb_joueur):
             joueurs.append(Vrais_Joueur())
-        
+
 
 
 def lancer_des():
