@@ -3,7 +3,7 @@ from zone import Zone
 from terrain import Terrain
 from gare import Gare
 import random
-
+from joueur import Vrais_Joueur
 
 def initialiser_plateau():
     plateau = []
@@ -15,12 +15,13 @@ def initialiser_plateau():
 
 def initialiser_joueurs():
     joueurs = []
-    nb_joueur = input("Combien y'a t-il de joueur")
-    if nb_joueur > 4 : 
+    nb_joueur = input("Combien y'a t-il de joueur (Entre 1 et 4)")
+    if nb_joueur <= 0 or nb_joueur > 4: 
         print("Nombre de joueurs incorrect, choisissez entre 1 et 4 ")
         initialiser_joueurs()
-    else:
-        
+    else:       
+        for _ in range(nb_joueur):
+            joueurs.append(Vrais_Joueur())
         
 
 
