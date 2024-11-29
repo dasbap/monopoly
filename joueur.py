@@ -1,6 +1,7 @@
 from abc import ABC, abstractmethod
+from terrain import Terrain
 
-class Joueur(ABC):
+class Joueur():
     def __init__(self,nom,argent) -> None:
         self.nom = nom
         self.argent = argent
@@ -16,22 +17,22 @@ class Joueur(ABC):
             print(f"{self.nom} ne possède pas assez d'argent.")
     
     
-    @abstractmethod
-    def ajouter_propriete(self, propriete):
-        pass
+    def ajouter_propriete(self, propriete : Terrain):
+        propriete.proprietaire = self
 
 class Banque(Joueur):
     def __init__(self):
         super().__init__("banque", 20580)
     
-    def ajouter_propriete(self, propriete):
-        pass
 
 class Vrais_Joueur(Joueur):
     nb_joueur = 1
     def __init__(self) -> None:
         nom = input(f"Quel est le nom du joueur {Vrais_Joueur.nb_joueur} :")
         super().__init__(nom, 1500)
-        
+        self.position = 0
+    
+    def avance(self):
+        pass
 
 banque = Banque()
